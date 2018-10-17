@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GdgRansackBootstrap</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+     <ul class="nav justify-content-center">
+         <li class="nav-item">
+           <%= image_tag 'gdg.jpeg', width: '100' %>
+         </li>
+     </ul>
+     <div class="container">
+       <%= yield %>
+     </div>
+   </body>
+</html>
