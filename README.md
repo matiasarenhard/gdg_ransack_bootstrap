@@ -1,8 +1,8 @@
 # RoR - Ransack - Bootstrap
 
-Simple project created in https://www.meetup.com/pt-BR/GDG-Toledo-PR/events/253753852/ .
+Simple project created at https://www.meetup.com/pt-BR/GDG-Toledo-PR/events/253753852/ .
 
-Steps from reproduces this project.
+Steps to reproduce this project.
 
 Ingredients:
 
@@ -12,22 +12,22 @@ Ingredients:
 https://gorails.com/setup/ubuntu/16.04 (Click in your S.O)
 
 
- 1 - Run this commands from create project
+ 1 - Run this commands to create the project
 
    ```
 rails new gdg_ransack_bootstrap
 cd gdg_ransack_bootstrap
 bundle install
 ```
- 2 - After create project and enter inside they, now we need create scaffolds.
+ 2 - After create the project and get into the folder, you must now create scaffolds.
  ```
 rails g scaffold brand name:string
 rails g scaffold supplier name:string email:string
 rails g scaffold product name:string description:string price:integer supplier:references brand:references
 ```
 
-3 - Ok, after create CRUDS, is necessary finish relationships of `brands - products` and `supplier - product`.
-   insert this line in `supplier.rb` and `brand.rb` files
+3 - Ok, after CRUDS be created, declare relationships of `brands - products` and `supplier - product`.
+   insert this line into `supplier.rb` and `brand.rb` files
    ```
 has_many :products
 ```
@@ -60,7 +60,7 @@ root :to => "products#index"
 	<%= form.collection_select :brand_id, Brand.all, :id, :name %>
 ```
 
-9 -  `Gemfile` insert this lines
+9 -  `Gemfile` insert these lines
 ```
 	gem 'bootstrap', '~> 4.0.0'
 	gem 'jquery-rails'
@@ -188,10 +188,10 @@ end
  ```
 17 - run `rails s`
 
-18 -  go to `http://localhost:3000/brands/new` in your browser, and create `brand`.
+18 -  go to `http://localhost:3000/brands/new` in your browser, and create a `brand`.
 
-19 -  go to `http://localhost:3000/suppliers/new` in your browser, and create `supplier`.
+19 -  go to `http://localhost:3000/suppliers/new` in your browser, and create a `supplier`.
 
-20 -  go to `http://localhost:3000/products/new` in your browser, and create `product`.
+20 -  go to `http://localhost:3000/products/new` in your browser, and create a `product`.
 
-21 - `http://localhost:3000` and finish !
+21 - `http://localhost:3000` and finish it!
