@@ -111,89 +111,87 @@ end
  </body>
 
 ```
- * if you want to use gdg image, download : https://github.com/matiasarenhard/gdg_ransack_bootstrap/blob/master/app/assets/images/gdg.jpeg and insert in `app/assets/images` and uncomment  `<!-- <%= image_tag 'gdg.jpeg', width: '100' %> -->`
 
 
- 15 - `products_controller.rb` change index method
-	```
-	 def index
-	    @search = Product.all.ransack(params[:query])
-	    @products = @search.result
-	 end
-	```
+15 -  `products_controller.rb` change index method
+```
+  def index
+     @search = Product.all.ransack(params[:query])
+     @products = @search.result
+  end
+```
+16 - `app/views/products/index.html.erb` change all lines
+ ```
+	<p id="notice"><%= notice %></p>
 
-	16 - `app/views/products/index.html.erb` change all lines
-	```
-		<p id="notice"><%= notice %></p>
+	<h1>Products</h1>
 
-		<h1>Products</h1>
+	<table class="table">
+	  <%= search_form_for @search, url: products_path do |f| %>
+	      <div class="row">
+	       <div class="col">
+		  <label>Name</label>
+		  <%= f.search_field :name_cont, placeholder: 'Name', class: 'form-control' %>
+	       </div>
+		  <div class="col">
+		    <label>Price</label>
+		    <%= f.search_field :price_eq, placeholder: 'Price', class: 'form-control' %>
+		 </div>
+		<div class="col">
+		   <label>Brand</label>
+		   <%= f.search_field :brand_name_cont, placeholder: 'Brand', class: 'form-control' %>
+		</div>
+		<div class="col">
+		   <label>Supplier Name/Email</label>
+		   <%= f.search_field :supplier_email_or_supplier_name_cont, placeholder: 'Supplier', class: 'form-control' %>
+		</div>
+		<div class="col">
+		  <br>
+		   <%= f.submit 'Buscar', class: 'btn btn-info' %>
+		</div>
+	     </div>
+	    <br><br>
+	    <thead>
+		<tr>
+		   <th><%= sort_link(@search, :name) %></th>
+		   <th>Description</th>
+		   <th><%= sort_link(@search, :price) %></th>
+		   <th>Supplier</th>
+		   <th>Email Supplier</th>
+		   <th>Brand</th>
+		   <th colspan="3"></th>
+		</tr>
+	     </thead>
+	  <% end %>
 
-		<table class="table">
-		  <%= search_form_for @search, url: products_path do |f| %>
-		      <div class="row">
-		       <div class="col">
-		          <label>Name</label>
-		          <%= f.search_field :name_cont, placeholder: 'Name', class: 'form-control' %>
-		       </div>
-		          <div class="col">
-		            <label>Price</label>
-		            <%= f.search_field :price_eq, placeholder: 'Price', class: 'form-control' %>
-		         </div>
-		        <div class="col">
-		           <label>Brand</label>
-		           <%= f.search_field :brand_name_cont, placeholder: 'Brand', class: 'form-control' %>
-		        </div>
-		        <div class="col">
-		           <label>Supplier Name/Email</label>
-		           <%= f.search_field :supplier_email_or_supplier_name_cont, placeholder: 'Supplier', class: 'form-control' %>
-		        </div>
-		        <div class="col">
-		          <br>
-		           <%= f.submit 'Buscar', class: 'btn btn-info' %>
-		        </div>
-		     </div>
-		    <br><br>
-		    <thead>
-		        <tr>
-		           <th><%= sort_link(@search, :name) %></th>
-		           <th>Description</th>
-		           <th><%= sort_link(@search, :price) %></th>
-		           <th>Supplier</th>
-		           <th>Email Supplier</th>
-		           <th>Brand</th>
-		           <th colspan="3"></th>
-		        </tr>
-		     </thead>
-		  <% end %>
+	  <tbody>
+	    <% @products.each do |product| %>
+	      <tr>
+		<td><%= product.name %></td>
+		<td><%= product.description %></td>
+		<td><%= product.price %></td>
+		<td><%= product.supplier.name %></td>
+		<td><%= product.supplier.email %></td>
+		<td><%= product.brand.name %></td>
+		<td><%= link_to 'Show', product %></td>
+		<td><%= link_to 'Edit', edit_product_path(product) %></td>
+		<td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
 
-		  <tbody>
-		    <% @products.each do |product| %>
-		      <tr>
-		        <td><%= product.name %></td>
-		        <td><%= product.description %></td>
-		        <td><%= product.price %></td>
-		        <td><%= product.supplier.name %></td>
-		        <td><%= product.supplier.email %></td>
-		        <td><%= product.brand.name %></td>
-		        <td><%= link_to 'Show', product %></td>
-		        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-		        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-		      </tr>
-		    <% end %>
-		  </tbody>
-		</table>
+	<br>
 
-		<br>
+	<%= link_to 'New Product', new_product_path, class: 'btn btn-success' %>
 
-		<%= link_to 'New Product', new_product_path, class: 'btn btn-success' %>
+ ```
+17 - run `rails s`
 
-	```
-	17 - run `rails s`
+18 -  go to `http://localhost:3000/brands/new` in your browser, and create `brand`.
 
-	18 -  go to `http://localhost:3000/brands/new` in your browser, and create `brand`.
+19 -  go to `http://localhost:3000/suppliers/new` in your browser, and create `supplier`.
 
-	19 -  go to `http://localhost:3000/suppliers/new` in your browser, and create `supplier`.
+20 -  go to `http://localhost:3000/products/new` in your browser, and create `product`.
 
-	20 -  go to `http://localhost:3000/products/new` in your browser, and create `product`.
-
-	21 - `http://localhost:3000` and finish !
+21 - `http://localhost:3000` and finish !
